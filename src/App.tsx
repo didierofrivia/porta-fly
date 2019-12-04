@@ -1,26 +1,71 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'react-app-polyfill/ie11'
+import '@patternfly/react-core/dist/styles/base.css'
+import {Brand} from '@patternfly/react-core'
+import React from 'react'
+import {Redirect, useHistory} from 'react-router-dom'
+import {AppLayout, SwitchWith404, LazyRoute} from './components'
+import './App.css'
+import logo from './logo.svg'
 
-const App: React.FC = () => {
+const Logo = <Brand src={logo} alt={'patternfly logo'}/>
+const navItems = [
+  {
+    title: 'Overview',
+    to: '/',
+    exact: true,
+  },
+  {
+    title: 'Analytics',
+    to: '/analytics',
+    items: [
+      {to: '/analytics/usage', title: 'Usage'},
+    ],
+  },
+  {
+    title: 'Applications',
+    to: '/applications',
+    items: [
+      {to: '/applications', title: 'Listing'},
+      {to: '/applications/plans', title: 'Application Plans'}
+    ],
+  },
+  {
+    title: 'Integration',
+    to: '/integration',
+    items: [
+      {to: '/integration/configuration', title: 'Configuration'}
+    ]
+  }
+]
+
+const getOverviewPage = () => import('./pages/Overview')
+
+const App = () => {
+  const history = useHistory()
+  const logoProps = React.useMemo(
+    () => ({
+      onClick: () => history.push('/'),
+    }),
+    [history]
+  )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AppLayout
+      logo={Logo}
+      logoProps={logoProps}
+      navVariant={'vertical'}
+      navItems={navItems}
+      navGroupsStyle={'expandable'}
+    >
+      <SwitchWith404>
+        <LazyRoute path="/" exact={true} getComponent={getOverviewPage} />
+        <Redirect
+          path={'/overview'}
+          to={'/'}
+          exact={true}
+        />
+      </SwitchWith404>
+    </AppLayout>
+  )
 }
 
-export default App;
+export default App
