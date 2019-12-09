@@ -33,7 +33,9 @@
     "koa-json": "^2.0.2",
     "koa-logger": "^3.2.1",
     "koa-router": "^7.4.0",
-    "tslib": "^1.10.0"
+    "node-fetch": "^2.6.0",
+    "tslib": "^1.10.0",
+    "xml2json": "^0.11.2"
   },
   "devDependencies": {
     "@types/koa": "^2.11.0",
@@ -42,6 +44,8 @@
     "@types/koa-logger": "^3.1.1",
     "@types/koa-router": "^7.0.42",
     "@types/node": "^12.12.14",
+    "@types/node-fetch": "^2.5.4",
+    "@types/xml2json": "^0.11.0",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.7.3"
   }
