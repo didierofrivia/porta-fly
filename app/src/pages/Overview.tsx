@@ -12,7 +12,7 @@ const Overview: React.FunctionComponent = ({children}) => {
   useDocumentTitle('Overview')
   return (
     <>
-      <PageSection variant={'dark'} style={{textAlign: 'center'}}>
+      <PageSection>
         OHAI
       </PageSection>
       <PageSection>
