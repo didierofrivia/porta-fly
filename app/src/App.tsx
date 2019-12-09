@@ -5,7 +5,7 @@ import React from 'react'
 import {Redirect, useHistory} from 'react-router-dom'
 import {AppLayout, SwitchWith404, LazyRoute} from './components'
 import './App.css'
-import logo from './logo.svg'
+import logo from './assets/logo.svg'
 
 const Logo = <Brand src={logo} alt={'patternfly logo'}/>
 const navItems = [
