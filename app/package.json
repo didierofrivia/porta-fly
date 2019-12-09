@@ -12,6 +12,7 @@
     "react-scripts": "3.2.0",
     "typescript": "3.7.2"
   },
+  "proxy": "http://localhost:3001",
   "devDependencies": {
     "@types/jest": "24.0.23",
     "@types/node": "12.12.14",
