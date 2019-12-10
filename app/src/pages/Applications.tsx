@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React from 'react'
+import { useFetch } from 'react-async';
 import {useDocumentTitle} from '../components'
 import {
   PageSection,
@@ -9,42 +10,46 @@ import {
 } from '@patternfly/react-core'
 import { Table, TableHeader, TableBody } from '@patternfly/react-table'
 
-
 const Applications: React.FunctionComponent = () => {
   useDocumentTitle('Applications')
-  const [columns, setColumns] = useState([
+
+  const columns = [
     'Name',
     'State',
     'Account',
     'Plan',
-    'Payment status',
-    'Created at',
-    'Traffic on'
-  ])
-  const [rows, setRows] = useState([
-    {
-      cells: [
-        'App 01',
-        'live',
-        'Developer',
-        'Basic',
-        'Paid',
-        'November 25, 2019',
-        'November 25, 2019'
-      ]
-    },
-    {
-      cells: [
-        'App 02',
-        'live',
-        'Developer',
-        'Basic',
-        'Paid',
-        'October 25, 2019',
-        'October 25, 2019'
-      ]
-    },
-  ])
+    'Created at'
+  ]
+  let rows
+
+  const { data, isPending } = useFetch<any>(
+    `/applications`,
+    { headers: { Accept: 'application/json' } }
+  );
+
+  const mapRowsData = (data: any) => {
+    if(!data) return 
+    const applications = data.applications.application // TODO: Check the server side xml2json
+    const applicationsArray =  Array.isArray(applications) ? applications : [{...applications}]
+
+    return applicationsArray.map(
+      (app: any) => {
+        return {
+          cells: [
+            app.name,
+            app.state,
+            'Developer',
+            app.plan.name,
+            app.created_at
+          ]
+        }
+      }
+    )
+  }
+
+  if (!isPending) {
+    rows = mapRowsData(data)
+  }
 
   return (
     <>
@@ -60,10 +65,12 @@ const Applications: React.FunctionComponent = () => {
       </PageSection>
 
       <PageSection>
-        <Table cells={columns} rows={rows}>
-          <TableHeader />
-          <TableBody />
-        </Table>
+        {rows && 
+          <Table cells={columns} rows={rows}>
+            <TableHeader />
+            <TableBody />
+          </Table>
+        }
       </PageSection>
     </>
   )
