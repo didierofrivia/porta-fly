@@ -150,7 +150,11 @@ export const AppLayout: React.FunctionComponent<IAppLayoutProps> = ({
       ),
     [navVariant, Navigation, isMobileView, isNavOpenMobile, isNavOpen, theme]
   )
-
+  const PageSkipToContent = (
+    <SkipToContent href="#primary-app-container">
+      Skip to Content
+    </SkipToContent>
+  );
   return (
     <AppLayoutContext.Provider value={{setBreadcrumb: handleSetBreadcrumb}}>
       <Page
@@ -159,11 +163,7 @@ export const AppLayout: React.FunctionComponent<IAppLayoutProps> = ({
         sidebar={Sidebar}
         breadcrumb={breadcrumb}
         onPageResize={onPageResize}
-        skipToContent={
-          <SkipToContent href="#primary-app-container">
-            Skip to Content
-          </SkipToContent>
-        }
+        skipToContent={PageSkipToContent}
       >
         {children}
       </Page>

@@ -39,6 +39,7 @@ const navItems = [
 ]
 
 const getOverviewPage = () => import('./pages/Overview')
+const getApplicationsPage = () => import('./pages/Applications')
 
 const App = () => {
   const history = useHistory()
@@ -58,6 +59,7 @@ const App = () => {
     >
       <SwitchWith404>
         <LazyRoute path="/" exact={true} getComponent={getOverviewPage} />
+        <LazyRoute path="/applications" exact={true} getComponent={getApplicationsPage} />
         <Redirect
           path={'/overview'}
           to={'/'}
